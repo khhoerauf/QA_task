@@ -71,28 +71,27 @@ describe('Video test', function () {
         .click()
       cy.get('@spyConsoleLog')
         .should('be.calledWith', 'Chartboost.Utils.callNative', 'mute')
-      
+        cy.get(muteImage)
+        .should("be.visible")
+        .click()
+      cy.get('@spyConsoleLog')
+        .should('be.calledWithMatch', 'Chartboost.Utils.callNative', 'unmute')
+
       cy.log("The video element is muted/unmuted") 
     })
 
-    //todo
-    it.skip('TC_06 Verify video validation', () => {  
-      cy.window().then((window) => {
-        // call whatever you want on your app's window
-        // so your app methods must be exposed somehow
-        window.callToPauseVideo()
-      })  
-
+    it('TC_06 Verify video validation', () => {
+      manageVideo("onBackground")
       cy.get('#play-button').should("be.visible")
+      
+      manageVideo("onForeground")
+      cy.get('#play-button').should("not.be.visible")
     })
 })
 
-function callToPauseVideo() {
-  var sdk = `Chartboost.EventHandler.handleNativeEvent('onForeground');`
-  console.log(sdk.toString());
-}
-
-function callToResumeVideo() {
-  var sdk = `Chartboost.EventHandler.handleNativeEvent('onBackground');`
-  console.log(sdk.toString());
-}
+function manageVideo(eventHandler) { 
+  cy.window().then(win => {
+    //onBackground - Pause video
+    //onForeground - Resume video
+    win.console.log(win.Chartboost.EventHandler.handleNativeEvent(eventHandler), win) 
+  })}
