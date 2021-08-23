@@ -4,7 +4,7 @@ Test files are located cypress/integration
 
 Snapshots from visual tests are saved cypress/screenshots/visual
 
--------------------------------------------------------------------
+----------------------------------------------------
 
 Getting Started 
 
@@ -12,7 +12,7 @@ You need to have installed NodeJS, run in terminal
 
 npm install 
 
--------------------------------------------------------------------
+----------------------------------------------------
 
 Running Tests: 
 
